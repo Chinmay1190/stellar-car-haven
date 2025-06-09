@@ -1,9 +1,9 @@
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { getFeaturedCars, brands } from '@/data/cars';
 import CarCard from '@/components/CarCard';
+import BackgroundCarousel from '@/components/BackgroundCarousel';
 import { ArrowDown, Star, Shield, Truck, Award } from 'lucide-react';
 
 const Index = () => {
@@ -11,16 +11,18 @@ const Index = () => {
 
   return (
     <div className="min-h-screen scroll-smooth">
-      {/* Enhanced Hero Section */}
+      {/* Enhanced Hero Section with Background Carousel */}
       <section className="relative h-screen flex items-center justify-center overflow-hidden">
-        {/* Animated Background */}
-        <div className="absolute inset-0 bg-luxury-dark-gradient opacity-90" />
-        <div className="absolute inset-0">
+        {/* Background Carousel */}
+        <BackgroundCarousel />
+        
+        {/* Pattern Overlay */}
+        <div className="absolute inset-0 z-10">
           <div className="absolute inset-0 bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20width%3D%2260%22%20height%3D%2260%22%20viewBox%3D%220%200%2060%2060%22%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%3E%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%3Cg%20fill%3D%22%23ffffff%22%20fill-opacity%3D%220.03%22%3E%3Ccircle%20cx%3D%2230%22%20cy%3D%2230%22%20r%3D%222%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-20" />
         </div>
         
         {/* Enhanced Floating Elements */}
-        <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute inset-0 overflow-hidden z-10">
           <div className="absolute top-20 left-20 w-32 h-32 bg-luxury-gold/20 rounded-full animate-float blur-xl" />
           <div className="absolute bottom-40 right-32 w-48 h-48 bg-luxury-accent/20 rounded-full animate-float blur-xl" style={{ animationDelay: '1s' }} />
           <div className="absolute top-1/2 left-1/4 w-24 h-24 bg-luxury-gold/10 rounded-full animate-float blur-xl" style={{ animationDelay: '2s' }} />
@@ -28,7 +30,7 @@ const Index = () => {
         </div>
 
         {/* Hero Content */}
-        <div className="relative z-10 text-center text-white animate-slide-up max-w-6xl mx-auto px-4">
+        <div className="relative z-20 text-center text-white animate-slide-up max-w-6xl mx-auto px-4">
           <div className="mb-8">
             <h1 className="luxury-serif text-7xl md:text-9xl font-bold mb-6 text-luxury-gradient animate-glow">
               LuxuryMotors
@@ -72,7 +74,7 @@ const Index = () => {
         </div>
 
         {/* Enhanced Scroll Indicator */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce z-20">
           <div className="w-6 h-10 border-2 border-white/50 rounded-full flex justify-center">
             <div className="w-1 h-3 bg-white/70 rounded-full mt-2 animate-pulse" />
           </div>
