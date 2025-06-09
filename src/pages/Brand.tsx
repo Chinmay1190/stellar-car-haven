@@ -10,6 +10,46 @@ const Brand = () => {
   const brand = brandId ? getBrandById(brandId) : undefined;
   const cars = brandId ? getCarsForBrand(brandId) : [];
 
+  // Brand styling configurations
+  const brandStyles = {
+    ferrari: {
+      logo: 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=400&h=200&fit=crop&auto=format&q=80',
+      bg: 'linear-gradient(135deg, #FF0000 0%, #8B0000 100%)',
+      bgImage: 'https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=1920&h=1080&fit=crop&auto=format&q=80',
+      textColor: 'text-white'
+    },
+    lamborghini: {
+      logo: 'https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=400&h=200&fit=crop&auto=format&q=80',
+      bg: 'linear-gradient(135deg, #FFD700 0%, #FFA500 100%)',
+      bgImage: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=1920&h=1080&fit=crop&auto=format&q=80',
+      textColor: 'text-black'
+    },
+    porsche: {
+      logo: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=400&h=200&fit=crop&auto=format&q=80',
+      bg: 'linear-gradient(135deg, #000000 0%, #333333 100%)',
+      bgImage: 'https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=1920&h=1080&fit=crop&auto=format&q=80',
+      textColor: 'text-white'
+    },
+    mclaren: {
+      logo: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=400&h=200&fit=crop&auto=format&q=80',
+      bg: 'linear-gradient(135deg, #FF8000 0%, #FF4500 100%)',
+      bgImage: 'https://images.unsplash.com/photo-1494905998402-395d579af36f?w=1920&h=1080&fit=crop&auto=format&q=80',
+      textColor: 'text-white'
+    },
+    bugatti: {
+      logo: 'https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=400&h=200&fit=crop&auto=format&q=80',
+      bg: 'linear-gradient(135deg, #0066CC 0%, #003D7A 100%)',
+      bgImage: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=1920&h=1080&fit=crop&auto=format&q=80',
+      textColor: 'text-white'
+    },
+    koenigsegg: {
+      logo: 'https://images.unsplash.com/photo-1494905998402-395d579af36f?w=400&h=200&fit=crop&auto=format&q=80',
+      bg: 'linear-gradient(135deg, #C0C0C0 0%, #696969 100%)',
+      bgImage: 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=1920&h=1080&fit=crop&auto=format&q=80',
+      textColor: 'text-black'
+    }
+  };
+
   if (!brand) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -23,32 +63,78 @@ const Brand = () => {
     );
   }
 
+  const brandStyle = brandStyles[brand.id as keyof typeof brandStyles];
   const inStockCars = cars.filter(car => car.inStock);
   const outOfStockCars = cars.filter(car => !car.inStock);
 
   return (
-    <div className="min-h-screen py-8">
-      <div className="container">
-        {/* Brand Header */}
-        <div className="text-center mb-16">
-          <div className="w-32 h-32 mx-auto mb-6 bg-luxury-gradient rounded-full flex items-center justify-center text-white font-bold text-4xl">
-            {brand.name.charAt(0)}
-          </div>
-          <h1 className="luxury-serif text-5xl font-bold mb-4">{brand.name}</h1>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-6">
-            {brand.description}
-          </p>
-          <div className="bg-muted/50 p-6 rounded-lg max-w-2xl mx-auto">
-            <p className="text-muted-foreground italic">
+    <div className="min-h-screen">
+      {/* Brand Hero Section with Background */}
+      <section className="relative h-96 overflow-hidden">
+        {/* Background Image */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{ 
+            backgroundImage: `url(${brandStyle?.bgImage})`,
+            filter: 'brightness(0.4) contrast(1.2)'
+          }}
+        />
+        
+        {/* Brand Gradient Overlay */}
+        <div 
+          className="absolute inset-0 opacity-60"
+          style={{ background: brandStyle?.bg }}
+        />
+        
+        {/* Content */}
+        <div className="relative z-10 container h-full flex items-center justify-center">
+          <div className="text-center text-white">
+            {/* Brand Logo */}
+            <div className="w-48 h-24 mx-auto mb-6 overflow-hidden rounded-lg shadow-2xl">
+              <img 
+                src={brandStyle?.logo} 
+                alt={`${brand.name} logo`}
+                className="w-full h-full object-cover"
+              />
+            </div>
+            
+            <h1 className="luxury-serif text-6xl font-bold mb-4 animate-fade-in">
+              {brand.name}
+            </h1>
+            <p className="text-xl max-w-2xl mx-auto leading-relaxed opacity-90">
               {brand.heritage}
             </p>
+          </div>
+        </div>
+      </section>
+
+      <div className="container py-16">
+        {/* Brand Description */}
+        <div className="text-center mb-16">
+          <div className="max-w-4xl mx-auto">
+            <p className="text-xl text-muted-foreground leading-relaxed mb-8">
+              {brand.description}
+            </p>
+            <div 
+              className="p-8 rounded-2xl text-white shadow-2xl"
+              style={{ background: brandStyle?.bg }}
+            >
+              <p className="italic text-lg leading-relaxed">
+                "{brand.heritage}"
+              </p>
+            </div>
           </div>
         </div>
 
         {/* Available Cars */}
         {inStockCars.length > 0 && (
           <section className="mb-16">
-            <h2 className="text-3xl font-bold mb-8">Available Models ({inStockCars.length})</h2>
+            <div className="flex items-center gap-4 mb-8">
+              <h2 className="text-4xl font-bold">Available Models</h2>
+              <span className="px-4 py-2 bg-luxury-gradient text-white rounded-full text-sm font-medium">
+                {inStockCars.length} in stock
+              </span>
+            </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {inStockCars.map((car, index) => (
                 <div 
@@ -66,12 +152,17 @@ const Brand = () => {
         {/* Out of Stock Cars */}
         {outOfStockCars.length > 0 && (
           <section className="mb-16">
-            <h2 className="text-3xl font-bold mb-8">Currently Unavailable ({outOfStockCars.length})</h2>
+            <div className="flex items-center gap-4 mb-8">
+              <h2 className="text-4xl font-bold text-muted-foreground">Currently Unavailable</h2>
+              <span className="px-4 py-2 bg-muted text-muted-foreground rounded-full text-sm">
+                {outOfStockCars.length} models
+              </span>
+            </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {outOfStockCars.map((car, index) => (
                 <div 
                   key={car.id}
-                  className="animate-fade-in opacity-60"
+                  className="animate-fade-in opacity-60 grayscale"
                   style={{ animationDelay: `${index * 0.1}s` }}
                 >
                   <CarCard car={car} />
@@ -97,23 +188,28 @@ const Brand = () => {
         )}
 
         {/* Contact CTA */}
-        <section className="text-center py-16 bg-muted/30 rounded-lg">
-          <h2 className="text-3xl font-bold mb-4">Interested in {brand.name}?</h2>
-          <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-            Our {brand.name} specialists are ready to help you find the perfect vehicle 
-            and arrange a private viewing.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/contact">
-              <Button size="lg" className="bg-luxury-gradient hover:opacity-90">
-                Contact Specialist
-              </Button>
-            </Link>
-            <Link to="/cars">
-              <Button size="lg" variant="outline">
-                View All Brands
-              </Button>
-            </Link>
+        <section className="text-center py-16">
+          <div 
+            className="rounded-2xl p-12 text-white shadow-2xl"
+            style={{ background: brandStyle?.bg }}
+          >
+            <h2 className="text-4xl font-bold mb-4">Interested in {brand.name}?</h2>
+            <p className="text-xl mb-8 max-w-2xl mx-auto opacity-90">
+              Our {brand.name} specialists are ready to help you find the perfect vehicle 
+              and arrange a private viewing.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link to="/contact">
+                <Button size="lg" className="bg-white/20 hover:bg-white/30 backdrop-blur-xl border border-white/30">
+                  Contact Specialist
+                </Button>
+              </Link>
+              <Link to="/cars">
+                <Button size="lg" variant="outline" className="border-white/50 text-white hover:bg-white/10">
+                  View All Brands
+                </Button>
+              </Link>
+            </div>
           </div>
         </section>
       </div>

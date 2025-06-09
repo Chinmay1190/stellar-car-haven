@@ -9,6 +9,40 @@ import { ArrowDown, Star, Shield, Truck, Award } from 'lucide-react';
 const Index = () => {
   const featuredCars = getFeaturedCars();
 
+  // Brand logo URLs and brand colors
+  const brandStyles = {
+    ferrari: {
+      logo: 'https://images.unsplash.com/photo-1583121274602-3e2820c69888?w=200&h=100&fit=crop&auto=format&q=80',
+      bg: 'linear-gradient(135deg, #FF0000 0%, #8B0000 100%)',
+      textColor: 'text-white'
+    },
+    lamborghini: {
+      logo: 'https://images.unsplash.com/photo-1544636331-e26879cd4d9b?w=200&h=100&fit=crop&auto=format&q=80',
+      bg: 'linear-gradient(135deg, #FFD700 0%, #FFA500 100%)',
+      textColor: 'text-black'
+    },
+    porsche: {
+      logo: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=200&h=100&fit=crop&auto=format&q=80',
+      bg: 'linear-gradient(135deg, #000000 0%, #333333 100%)',
+      textColor: 'text-white'
+    },
+    mclaren: {
+      logo: 'https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=200&h=100&fit=crop&auto=format&q=80',
+      bg: 'linear-gradient(135deg, #FF8000 0%, #FF4500 100%)',
+      textColor: 'text-white'
+    },
+    bugatti: {
+      logo: 'https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=200&h=100&fit=crop&auto=format&q=80',
+      bg: 'linear-gradient(135deg, #0066CC 0%, #003D7A 100%)',
+      textColor: 'text-white'
+    },
+    koenigsegg: {
+      logo: 'https://images.unsplash.com/photo-1494905998402-395d579af36f?w=200&h=100&fit=crop&auto=format&q=80',
+      bg: 'linear-gradient(135deg, #C0C0C0 0%, #696969 100%)',
+      textColor: 'text-black'
+    }
+  };
+
   return (
     <div className="min-h-screen scroll-smooth">
       {/* Enhanced Hero Section with Background Carousel */}
@@ -99,27 +133,50 @@ const Index = () => {
             </p>
           </div>
           
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8">
-            {brands.map((brand, index) => (
-              <Link 
-                key={brand.id} 
-                to={`/brand/${brand.id}`}
-                className="group text-center animate-fade-in hover-lift"
-                style={{ animationDelay: `${index * 0.1}s` }}
-              >
-                <div className="luxury-card p-8 group-hover:border-luxury-gold/50 transition-all duration-500">
-                  <div className="w-20 h-20 mx-auto mb-6 bg-luxury-gradient rounded-2xl flex items-center justify-center text-white font-bold text-2xl shadow-2xl group-hover:scale-110 transition-transform duration-300">
-                    {brand.name.charAt(0)}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {brands.map((brand, index) => {
+              const brandStyle = brandStyles[brand.id as keyof typeof brandStyles];
+              return (
+                <Link 
+                  key={brand.id} 
+                  to={`/brand/${brand.id}`}
+                  className="group text-center animate-fade-in hover-lift"
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                >
+                  <div className="luxury-card overflow-hidden group-hover:border-luxury-gold/50 transition-all duration-500 relative">
+                    {/* Brand Background */}
+                    <div 
+                      className="absolute inset-0 opacity-10 group-hover:opacity-20 transition-opacity duration-500"
+                      style={{ background: brandStyle?.bg }}
+                    />
+                    
+                    {/* Content */}
+                    <div className="relative z-10 p-8">
+                      {/* Brand Logo */}
+                      <div className="w-24 h-16 mx-auto mb-6 overflow-hidden rounded-lg shadow-lg group-hover:scale-110 transition-transform duration-300">
+                        <img 
+                          src={brandStyle?.logo} 
+                          alt={`${brand.name} logo`}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      
+                      <h3 className="font-bold text-xl mb-2 group-hover:text-luxury-gradient transition-colors">
+                        {brand.name}
+                      </h3>
+                      <p className="text-sm text-muted-foreground mb-4">
+                        {brand.carsCount} Exclusive Models
+                      </p>
+                      
+                      {/* Brand Description Preview */}
+                      <p className="text-xs text-muted-foreground/80 line-clamp-2">
+                        {brand.description}
+                      </p>
+                    </div>
                   </div>
-                  <h3 className="font-bold text-lg mb-2 group-hover:text-luxury-gradient transition-colors">
-                    {brand.name}
-                  </h3>
-                  <p className="text-sm text-muted-foreground">
-                    {brand.carsCount} Exclusive Models
-                  </p>
-                </div>
-              </Link>
-            ))}
+                </Link>
+              );
+            })}
           </div>
         </div>
       </section>
